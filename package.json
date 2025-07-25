@@ -6,10 +6,8 @@
     "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node dist/index.js",
-    "start:ws": "node dist/ws-server.js",
     "dev": "nodemon src/index.ts",
-    "seed": "ts-node prisma/seed.ts",
-    "dev:ws": "nodemon src/ws-server/ws-server.ts"
+    "seed": "ts-node prisma/seed.ts"
   },
   "keywords": [],
   "author": "",
