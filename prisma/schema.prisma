@@ -1,0 +1,76 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+
+model User {
+  id  String  @id @default(uuid())
+  clerkId   String  @unique
+  name    String?
+  email   String?
+  image_url   String?
+  listings  Listing[]
+  createdAt DateTime  @default(now())
+  sentMessages  ChatMessage[] @relation("SentMessages")
+  receivedMessages ChatMessage[] @relation("RecievedMessages")
+}
+
+model Category {
+  id  String  @id @default(uuid())
+  name  String @unique
+  icon  String
+  listings  Listing[]
+}
+model Listing {
+  id String @id @default(uuid())
+  title String
+  description String
+  price   Float
+  imagesUrl  String[]
+  createdAt DateTime @default(now())
+  userId  String
+  user User @relation(fields: [userId],references: [id])
+
+  categoryId  String
+  category  Category  @relation(fields: [categoryId],references: [id])
+
+  carDetail   CarDetail? 
+  latitude    Float?
+  longitude   Float?
+  city        String?
+  state       String?
+  country     String?
+  messages    ChatMessage[] @relation("ListingMessages") 
+}
+model ChatMessage {
+  id    String @id @default(uuid())
+  senderId    String
+  recieverId  String
+  content     String
+  createdAt   DateTime  @default(now())
+  listingId   String?
+  listing   Listing? @relation("ListingMessages",fields: [listingId],references: [id])
+
+  sender  User  @relation("SentMessages",fields: [senderId],references: [id])
+  reciever  User @relation("RecievedMessages",fields: [recieverId],references: [id])
+}
+model CarDetail {
+  id  String @id @default(uuid())
+  year  Int
+  fuel  String
+  transmission String
+
+  listingId String @unique
+  listing Listing @relation(fields: [listingId],references: [id])
+}
