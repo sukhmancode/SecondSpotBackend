@@ -77,7 +77,7 @@ router.get('/get', async(_req, res) => {
     }
     catch(err) {
       return res.status(500).json({
-        message:"not deleted"
+        message:"not deleted",err
       })
     }
   })

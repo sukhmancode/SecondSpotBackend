@@ -32,7 +32,7 @@ const wss = new WebSocketServer({ server });
 const clients = new Map<string, WebSocket>();
 
 wss.on("connection", (socket) => {
-    let userId: any;
+    let userId: string;
     console.log("WebSocket connected");
 
     socket.on("message", async (message) => {
