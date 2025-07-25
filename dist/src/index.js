@@ -32,6 +32,9 @@ app.use('/api/categories', categories_1.default);
 app.use('/api/users', user_1.default);
 app.use('/api/get', messages_1.default);
 app.use('/api/listings', listings_1.default);
+app.get("/", (req, res) => {
+    res.send("backend is running");
+});
 // Create HTTP server
 const server = http_1.default.createServer(app);
 // Setup WebSocket server on the same HTTP server
