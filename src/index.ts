@@ -22,6 +22,9 @@ app.use('/api/categories', categoryRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/get', getChatsRouter);
 app.use('/api/listings', listingRouter);
+app.get("/",(req,res) => {
+    res.send("backend is running")
+})
 
 // Create HTTP server
 const server = http.createServer(app);
